@@ -1,0 +1,10 @@
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/bin/Debug/netcoreapp2.0/Karatsuba.deps.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/bin/Debug/netcoreapp2.0/Karatsuba.runtimeconfig.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/bin/Debug/netcoreapp2.0/Karatsuba.runtimeconfig.dev.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/bin/Debug/netcoreapp2.0/Karatsuba.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/bin/Debug/netcoreapp2.0/Karatsuba.pdb
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/obj/Debug/netcoreapp2.0/Karatsuba.csproj.CoreCompileInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/obj/Debug/netcoreapp2.0/Karatsuba.AssemblyInfoInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/obj/Debug/netcoreapp2.0/Karatsuba.AssemblyInfo.cs
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/obj/Debug/netcoreapp2.0/Karatsuba.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/Karatsuba/obj/Debug/netcoreapp2.0/Karatsuba.pdb
