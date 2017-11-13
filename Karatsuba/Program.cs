@@ -7,43 +7,34 @@ namespace Karatsuba
     {
         static BigInteger Multiply(BigInteger x, BigInteger y)
         {
-            if (NumberOfDigits(x) == 1 || NumberOfDigits(y) == 1)
+            if (x < 10 || y < 10)
             {
-                BigInteger product = 0;
-                for(var i = 1; i <= x; i++)
-                {
-                    product += y;
-                }
-
-                return product;
+                return x * y;
             }
+            
+            var n = Math.Max(x.ToString().Length, y.ToString().Length);
+            var n2 = n/2;
 
-            string xString = x.ToString();
-            string yString = y.ToString();
+            BigInteger a = x / BigInteger.Pow(10, n2);
+            BigInteger b = x % BigInteger.Pow(10, n2);
+            BigInteger c = y / BigInteger.Pow(10, n2);
+            BigInteger d = y % BigInteger.Pow(10, n2);
 
-            var xUpto = xString.Length / 2;
-            var yUpto = yString.Length / 2;
+            BigInteger ac = Multiply(a, c);
+            BigInteger bd = Multiply(b, d);
+            BigInteger adPlusBc = Multiply((a+b), (c+d)) - ac - bd;
 
-            BigInteger a = BigInteger.Parse(xString.Substring(0, xUpto));
-            BigInteger b = BigInteger.Parse(xString.Substring(xUpto));
-            BigInteger c = BigInteger.Parse(yString.Substring(0, yUpto));
-            BigInteger d = BigInteger.Parse(yString.Substring(yUpto));
-
-            return (int)Math.Pow(10, xString.Length) * Multiply(a, c) 
-                +  (int)Math.Pow(10, xString.Length / 2) * (Multiply(a, d) + Multiply(b, c))
-                + Multiply(b, d);
-        }
-
-        static Int64 NumberOfDigits(BigInteger x)
-        {
-            return x.ToString().Length;
+            return (ac * BigInteger.Pow(10, 2 * n2)) 
+                +  ((adPlusBc) * BigInteger.Pow(10, n2)) 
+                + bd;
         }
 
         static void Main(string[] args)
         {
             BigInteger x = BigInteger.Parse(args[0]);
             BigInteger y = BigInteger.Parse(args[1]);
-            Console.WriteLine(Multiply(x, y));
+
+            Console.WriteLine(Multiply(x,y));
         }
     }
 }
