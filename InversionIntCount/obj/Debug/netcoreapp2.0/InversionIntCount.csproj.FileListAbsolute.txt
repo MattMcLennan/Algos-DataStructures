@@ -1,0 +1,10 @@
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/bin/Debug/netcoreapp2.0/InversionIntCount.deps.json
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/bin/Debug/netcoreapp2.0/InversionIntCount.runtimeconfig.json
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/bin/Debug/netcoreapp2.0/InversionIntCount.runtimeconfig.dev.json
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/bin/Debug/netcoreapp2.0/InversionIntCount.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/bin/Debug/netcoreapp2.0/InversionIntCount.pdb
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/obj/Debug/netcoreapp2.0/InversionIntCount.csproj.CoreCompileInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/obj/Debug/netcoreapp2.0/InversionIntCount.AssemblyInfoInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/obj/Debug/netcoreapp2.0/InversionIntCount.AssemblyInfo.cs
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/obj/Debug/netcoreapp2.0/InversionIntCount.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/InversionIntCount/obj/Debug/netcoreapp2.0/InversionIntCount.pdb
