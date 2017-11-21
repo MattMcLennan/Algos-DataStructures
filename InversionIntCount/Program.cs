@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace InversionIntCount
@@ -13,58 +14,57 @@ namespace InversionIntCount
 
     class Program
     {
-        static int GetInversions(List<int> inputList)
+        static (long count, List<int> outputList) CountAndSort(List<int> integerList)
         {
-            var inversions = 0;
-            var len = inputList.Count - 1;
-
-            for (var i = 0; i <= len; i++)
+            if (integerList.Count <= 1)
             {
-                for (var j = i; j <= len; j++)
-                {
-                    if (inputList[i] > inputList[j])
-                    {
-                        inversions++;
-                    }
-                }
+                return (0, integerList);
             }
 
-            return inversions;
+            int mid = integerList.Count / 2;
+            List<int> leftHalf = integerList.GetRange(0, mid);
+            List<int> rightHalf = integerList.GetRange(mid, integerList.Count - leftHalf.Count);
+
+            var leftHalfOutput = CountAndSort(leftHalf);
+            var rightHalfOutput = CountAndSort(rightHalf);
+            (long count, List<int> outputList) mergeOutput = MergeAndCountInversions(leftHalfOutput.outputList, rightHalfOutput.outputList);
+
+            return (leftHalfOutput.count + rightHalfOutput.count + mergeOutput.count, mergeOutput.outputList);
         }
 
-        static int GetInversions2(List<int> integerList)
+        static (long, List<int>) MergeAndCountInversions(List<int> leftHalf, List<int> rightHalf)
         {
-            List<int> left = new List<int>();
-            List<int> right = new List<int>();
+            int leftIndex = 0;
+            int rightIndex = 0;
+            int inversions = 0;
+            var outputList = new List<int>();
 
-            int len = integerList.Count / 2;
-            left.AddRange(integerList.GetRange(0, len));
-            right.AddRange(integerList.GetRange(len, integerList.Count - len));
-
-            if (left.Count == 1 || right.Count == 1)
+            while (leftIndex < leftHalf.Count && rightIndex < rightHalf.Count)
             {
-                int leftIndex = 0;
-                int rightIndex = 0;
-                int inversions = 0;
-
-                while(leftIndex < left.Count && rightIndex < right.Count)
+                if (leftHalf[leftIndex] <= rightHalf[rightIndex])
                 {
-                    if (left[leftIndex] > right[rightIndex])
-                    {
-                        inversions++;
-                        leftIndex++;
-                    }
-                    else 
-                    {
-                        rightIndex++;
-                    }
+                    outputList.Add(leftHalf[leftIndex]);
+                    leftIndex++;
                 }
-
-                inversions += right.Count - rightIndex;
-                return inversions;
+                else
+                {
+                    outputList.Add(rightHalf[rightIndex]);
+                    rightIndex++;
+                    inversions += (leftHalf.Count - leftIndex);
+                }
             }
 
-            return GetInversions2(left) + GetInversions2(right);
+            if (leftIndex < leftHalf.Count)
+            {
+                outputList.AddRange(leftHalf.GetRange(leftIndex, leftHalf.Count - leftIndex));
+            }
+
+            if (rightIndex < rightHalf.Count)
+            {
+                outputList.AddRange(rightHalf.GetRange(rightIndex, rightHalf.Count - rightIndex));
+            }
+
+            return (inversions, outputList);
         }
 
         static int Main(string[] args)
@@ -75,25 +75,15 @@ namespace InversionIntCount
                 return (int)ExitCode.InvalidFilename;
             }
 
-            var totalInversions = 0;
-            foreach(var line in File.ReadLines(@fileName))
+            List<int> inputIntegers = new List<int>();
+            foreach (var line in File.ReadLines(@fileName))
             {
-                totalInversions += GetInversions2(ConvertLine(line));
+                inputIntegers.Add(Convert.ToInt32(line));
             }
 
-            Console.WriteLine($"Total Inversions = {totalInversions}");
+            var totalInversions = CountAndSort(inputIntegers);
+            Console.WriteLine($"Total Inversions = {totalInversions.count}");
             return (int)ExitCode.Success;
-        }
-
-        private static List<int> ConvertLine(string line)
-        {
-            var result = new List<int>();
-            foreach (char i in line)
-            {
-                result.Add(Convert.ToInt32(Char.GetNumericValue(i)));
-            }
-
-            return result;
         }
     }
 }
