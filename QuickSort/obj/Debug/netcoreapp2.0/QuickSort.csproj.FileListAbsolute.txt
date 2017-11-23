@@ -1,0 +1,10 @@
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/bin/Debug/netcoreapp2.0/QuickSort.deps.json
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/bin/Debug/netcoreapp2.0/QuickSort.runtimeconfig.json
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/bin/Debug/netcoreapp2.0/QuickSort.runtimeconfig.dev.json
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/bin/Debug/netcoreapp2.0/QuickSort.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/bin/Debug/netcoreapp2.0/QuickSort.pdb
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/obj/Debug/netcoreapp2.0/QuickSort.csproj.CoreCompileInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/obj/Debug/netcoreapp2.0/QuickSort.AssemblyInfoInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/obj/Debug/netcoreapp2.0/QuickSort.AssemblyInfo.cs
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/obj/Debug/netcoreapp2.0/QuickSort.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/QuickSort/obj/Debug/netcoreapp2.0/QuickSort.pdb
