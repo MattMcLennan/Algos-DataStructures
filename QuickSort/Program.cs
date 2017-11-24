@@ -48,15 +48,16 @@ namespace QuickSort
             return left;
         }
 
-        static (int totalComparisons, List<int> list) QuickSort(List<int> inputList, int comparisonRunningTotal, int left, int right)
+        static int QuickSort(List<int> inputList, int left, int right)
         {
             if (left >= right || left < 0 || right < 0)
             {
-                return (comparisonRunningTotal, inputList);
+                return 0;
             }
 
             // int index = PartitionInputAroundPivot(inputList, ChoosePivotIndex(inputList), right);
 
+            var comparisons = right - left - 1;
             var pivot = inputList[left];
 
             var i = left + 1;
@@ -72,10 +73,10 @@ namespace QuickSort
 
             Swap(inputList, left, i - 1);
             
-            (int totalComparisons, List<int> list) sortLeft = QuickSort(inputList, comparisonRunningTotal + left - 1, left, i - 1);
-            (int totalComparisons, List<int> list) sortRight = QuickSort(inputList, comparisonRunningTotal + right - 1, i, right);
+            int sortLeft = QuickSort(inputList, left, i - 1);
+            int sortRight = QuickSort(inputList, i, right);
 
-            return (sortLeft.totalComparisons + sortRight.totalComparisons, inputList);
+            return comparisons + sortLeft + sortRight;
         }
 
         static int Main(string[] args)
@@ -92,9 +93,8 @@ namespace QuickSort
                 inputIntegers.Add(Convert.ToInt32(line));
             }
 
-            var quickSort = QuickSort(inputIntegers, 0, 0, inputIntegers.Count);
-            Console.WriteLine($"The sorted list is: {quickSort.list}");
-            Console.WriteLine($"Total Comparisons Completed = {quickSort.totalComparisons}");
+            var quickSort = QuickSort(inputIntegers, 0, inputIntegers.Count);
+            Console.WriteLine($"Total Comparisons Completed = {quickSort}");
             return (int)ExitCode.Success;
         }
     }
