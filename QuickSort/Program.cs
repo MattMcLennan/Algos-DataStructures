@@ -25,37 +25,12 @@ namespace QuickSort
             inputList[index2] = temp;
         }
 
-        static int PartitionInputAroundPivot(List<int> inputList, int left, int right)
-        {
-            if (left > right)
-            {
-                return -1;
-            }
-
-            var pivot = inputList[left];
-
-            var i = left + 1;
-            for (var j = left + 1; j <= right; j++)
-            {
-                if (inputList[j] < pivot)
-                {
-                    Swap(inputList, j, i);
-                    i++;
-                }
-            }
-
-            Swap(inputList, left, i - 1);
-            return left;
-        }
-
         static int QuickSort(List<int> inputList, int left, int right)
         {
             if (left >= right || left < 0 || right < 0)
             {
                 return 0;
             }
-
-            // int index = PartitionInputAroundPivot(inputList, ChoosePivotIndex(inputList), right);
 
             var comparisons = right - left - 1;
             var pivot = inputList[left];
