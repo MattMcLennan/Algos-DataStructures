@@ -13,9 +13,9 @@ namespace QuickSort
 
     class Program
     {
-        static int ChoosePivot(List<int> inputList)
+        static int ChoosePivotIndex(List<int> inputList)
         {
-            return 0;
+            return 0; 
         }
 
         private static void Swap(List<int> inputList, int index1, int index2)
@@ -25,12 +25,17 @@ namespace QuickSort
             inputList[index2] = temp;
         }
 
-        static void PartitionInputAroundPivot(int pivotIndex, List<int> inputList)
+        static int PartitionInputAroundPivot(List<int> inputList, int left, int right)
         {
-            var pivot = inputList[pivotIndex];
-            var i = pivotIndex + 1;
+            if (left > right)
+            {
+                return -1;
+            }
 
-            for (int j = pivotIndex + 1; j < inputList.Count - 1; j++)
+            var pivot = inputList[left];
+
+            var i = left + 1;
+            for (var j = left + 1; j <= right; j++)
             {
                 if (inputList[j] < pivot)
                 {
@@ -39,23 +44,36 @@ namespace QuickSort
                 }
             }
 
-            Swap(inputList, pivotIndex, i - 1);
+            Swap(inputList, left, i - 1);
+            return left;
         }
 
-        static (int totalComparisons, List<int> list) QuickSort(List<int> inputList, int comparisonRunningTotal)
+        static (int totalComparisons, List<int> list) QuickSort(List<int> inputList, int comparisonRunningTotal, int left, int right)
         {
-            if (inputList.Count <= 1)
+            if (left >= right || left < 0 || right < 0)
             {
-                return (0, new List<int>());
+                return (comparisonRunningTotal, inputList);
             }
 
-            int pivotIndex = ChoosePivot(inputList);
-            PartitionInputAroundPivot(pivotIndex, inputList);
+            // int index = PartitionInputAroundPivot(inputList, ChoosePivotIndex(inputList), right);
 
-            var leftSubList = inputList.GetRange(0, pivotIndex);
-            var rightSubList = inputList.GetRange(pivotIndex + 1, inputList.Count - leftSubList.Count - 1);
-            var sortLeft = QuickSort(leftSubList, leftSubList.Count);
-            var sortRight = QuickSort(rightSubList, rightSubList.Count);
+            var pivot = inputList[left];
+
+            var i = left + 1;
+            var j = 0;
+            for (j = left + 1; j < right; j++)
+            {
+                if (inputList[j] < pivot)
+                {
+                    Swap(inputList, j, i);
+                    i++;
+                }
+            }
+
+            Swap(inputList, left, i - 1);
+            
+            (int totalComparisons, List<int> list) sortLeft = QuickSort(inputList, comparisonRunningTotal + left - 1, left, i - 1);
+            (int totalComparisons, List<int> list) sortRight = QuickSort(inputList, comparisonRunningTotal + right - 1, i, right);
 
             return (sortLeft.totalComparisons + sortRight.totalComparisons, inputList);
         }
@@ -74,7 +92,7 @@ namespace QuickSort
                 inputIntegers.Add(Convert.ToInt32(line));
             }
 
-            var quickSort = QuickSort(inputIntegers, 0);
+            var quickSort = QuickSort(inputIntegers, 0, 0, inputIntegers.Count);
             Console.WriteLine($"The sorted list is: {quickSort.list}");
             Console.WriteLine($"Total Comparisons Completed = {quickSort.totalComparisons}");
             return (int)ExitCode.Success;
