@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace QuickSort
 {
@@ -11,11 +12,47 @@ namespace QuickSort
         UnknownError = 10
     }
 
+    internal enum PivotMethod
+    {
+        First,
+        Last,
+        Median
+    }
+
     class Program
     {
-        static int ChoosePivotIndex(List<int> inputList)
+        static int ChoosePivotIndex(PivotMethod pivotMethod, List<int> inputList, int left, int right)
         {
-            return 0; 
+            switch (pivotMethod)
+            {
+                case PivotMethod.First:
+                {
+                    return left;
+                }
+                
+                case PivotMethod.Last:
+                {
+                    return right - 1;
+                }
+
+                case PivotMethod.Median:
+                {
+                    float x = (left + right - 1) / 2;
+                    var middleIndex = Convert.ToInt32(Math.Floor(x));
+
+                    List<int> y = new List<int>
+                    {
+                        inputList[left],
+                        inputList[right - 1],
+                        inputList[middleIndex],
+                    };
+
+                    y.Sort();
+                    return inputList.IndexOf(y[1]);
+                }
+            }
+
+            return 0;
         }
 
         private static void Swap(List<int> inputList, int index1, int index2)
@@ -33,7 +70,10 @@ namespace QuickSort
             }
 
             var comparisons = right - left - 1;
-            var pivot = inputList[left];
+            var pivotIndex = ChoosePivotIndex(PivotMethod.Median, inputList, left, right);
+            var pivot = inputList[pivotIndex];
+
+            Swap(inputList, pivotIndex, left);
 
             var i = left + 1;
             var j = 0;
