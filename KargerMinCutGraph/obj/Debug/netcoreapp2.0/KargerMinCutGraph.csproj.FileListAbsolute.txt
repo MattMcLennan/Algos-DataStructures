@@ -1,0 +1,10 @@
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/bin/Debug/netcoreapp2.0/KargerMinCutGraph.deps.json
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/bin/Debug/netcoreapp2.0/KargerMinCutGraph.runtimeconfig.json
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/bin/Debug/netcoreapp2.0/KargerMinCutGraph.runtimeconfig.dev.json
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/bin/Debug/netcoreapp2.0/KargerMinCutGraph.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/bin/Debug/netcoreapp2.0/KargerMinCutGraph.pdb
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/obj/Debug/netcoreapp2.0/KargerMinCutGraph.csproj.CoreCompileInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/obj/Debug/netcoreapp2.0/KargerMinCutGraph.AssemblyInfoInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/obj/Debug/netcoreapp2.0/KargerMinCutGraph.AssemblyInfo.cs
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/obj/Debug/netcoreapp2.0/KargerMinCutGraph.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/KargerMinCutGraph/obj/Debug/netcoreapp2.0/KargerMinCutGraph.pdb
