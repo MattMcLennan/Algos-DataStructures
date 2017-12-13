@@ -12,67 +12,26 @@ namespace KargerMinCutGraph
         UnknownError = 10
     }
 
-    internal class AdjacencyList
+    internal class Graph
     {
-        LinkedList<(int, int)>[] adjacencyList;
+        LinkedList<int>[] adjacencyList;
 
-        public AdjacencyList(int vertices)
+        public Graph(int vertices)
         {
-            adjacencyList = new LinkedList<(int, int)>[vertices];
+            adjacencyList = new LinkedList<int>[vertices];
 
             for (var i = 0; i <= adjacencyList.Length - 1; i++)
             {
-                adjacencyList[i] = new LinkedList<(int, int)>();
+                adjacencyList[i] = new LinkedList<int>();
             }
         }
 
-        public void AddEdgeAtEnd(int startVertex, int endVertex, int weight)
+        public void AddEdge(int startVertex, int endVertex)
         {
-            adjacencyList[startVertex].AddLast((endVertex, weight));
+            // Needed to - 1 to offset 1 based positioning vs array 0 based index
+            adjacencyList[startVertex - 1].AddLast((endVertex - 1));
         }
- 
-        public void AddEdgeAtBegin(int startVertex, int endVertex, int weight)
-        {
-            adjacencyList[startVertex].AddFirst((endVertex, weight));
-        }
- 
-        public int NumberOfVertices()
-        {
-            return adjacencyList.Length;
-        }
- 
-        public LinkedList<(int, int)> this[int index]
-        {
-            get
-            {
-                LinkedList<(int, int)> edgeList = new LinkedList<(int, int)>(adjacencyList[index]);
-                return edgeList;
-            }
-        }
- 
-        public void PrintAdjacencyList()
-        {
-            int i = 0;
-            foreach (LinkedList<(int, int)> list in adjacencyList)
-            {
-                Console.Write("adjacencyList[" + i + "] -> ");
- 
-                foreach ((int, int) edge in list)
-                {
-                    Console.Write(edge.Item1 + "(" + edge.Item2 + ")");
-                }
- 
-                ++i;
-                Console.WriteLine();
-            }
-        }
- 
-        public bool RemoveEdge(int startVertex, int endVertex, int weight)
-        {
-            (int, int) edge = (endVertex, weight);
-            return adjacencyList[startVertex].Remove(edge);
-        }
-    }
+   }
 
     class Program
     {
@@ -85,19 +44,17 @@ namespace KargerMinCutGraph
             }
 
             var lineCount = File.ReadLines(@fileName).Count();
-            AdjacencyList adjacencyList = new AdjacencyList(lineCount + 1);
+            Graph graph = new Graph(lineCount);
             foreach (var line in File.ReadLines(@fileName))
             {
-                var x = line;
-                // first column is vertex
-                // rest are edged
+                var info = line.Split('\t').ToArray();
+                var vertex = info[0];
 
+                for(var i = 1; i <= info.Length - 2; i++)
+                {
+                    graph.AddEdge(Convert.ToInt32(vertex), Convert.ToInt32(info[i]));
+                }
             } 
-
-            Console.WriteLine("Enter the edges with weights -");
- 
-            // 1 - 200 vertices
-            // do something with the input
 
             return (int)ExitCode.Success;
         }
