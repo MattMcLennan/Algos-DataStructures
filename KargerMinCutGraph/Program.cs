@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace KargerMinCutGraph
 {
@@ -19,7 +20,7 @@ namespace KargerMinCutGraph
         {
             adjacencyList = new LinkedList<(int, int)>[vertices];
 
-            for (var i = 0; i <= adjacencyList.Length; i++)
+            for (var i = 0; i <= adjacencyList.Length - 1; i++)
             {
                 adjacencyList[i] = new LinkedList<(int, int)>();
             }
@@ -83,12 +84,11 @@ namespace KargerMinCutGraph
                 return (int)ExitCode.InvalidFileName;
             }
 
-            Console.WriteLine("Enter the number of vertices -");
-            int vertices = Int32.Parse(Console.ReadLine());
- 
-            AdjacencyList adjacencyList = new AdjacencyList(vertices + 1);
+            var lineCount = File.ReadLines(@fileName).Count();
+            AdjacencyList adjacencyList = new AdjacencyList(lineCount + 1);
             foreach (var line in File.ReadLines(@fileName))
             {
+                var x = line;
                 // first column is vertex
                 // rest are edged
 
