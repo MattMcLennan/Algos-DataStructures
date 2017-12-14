@@ -31,6 +31,11 @@ namespace KargerMinCutGraph
             // Needed to - 1 to offset 1 based positioning vs array 0 based index
             adjacencyList[startVertex - 1].AddLast((endVertex - 1));
         }
+
+        public int Length()
+        {
+            return adjacencyList.Length;
+        }
    }
 
     class Program
@@ -56,7 +61,20 @@ namespace KargerMinCutGraph
                 }
             } 
 
+            int minCut = GetMinCutFromGraph(graph);
+            Console.WriteLine(minCut);
+
             return (int)ExitCode.Success;
+        }
+
+        private static int GetMinCutFromGraph(Graph graph)
+        {
+            if (graph.Length() <= 2)
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }
