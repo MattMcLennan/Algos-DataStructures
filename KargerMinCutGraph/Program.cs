@@ -32,9 +32,58 @@ namespace KargerMinCutGraph
             adjacencyList[startVertex - 1].AddLast((endVertex - 1));
         }
 
-        public int Length()
+        public void RemoveEdge(int startVertex, int endVertex)
         {
-            return adjacencyList.Length;
+            MergeVertices(startVertex, endVertex);
+            RemoveVertex(endVertex);
+            RemoveReferenceToVertex(endVertex);
+        }
+
+        private void MergeVertices(int startVertex, int endVertex)
+        {
+            foreach (var item in adjacencyList[endVertex])
+            {
+                if (!adjacencyList[startVertex].Contains(item))
+                {
+                    adjacencyList[startVertex].AddLast(item);
+                }
+            }
+        }
+
+        private void RemoveReferenceToVertex(int endVertex)
+        {
+            foreach (var item in adjacencyList)
+            {
+                if (item.Contains(endVertex))
+                {
+                    item.Remove(endVertex);
+                }
+            }
+        }
+
+        public void RemoveVertex(int vertex)
+        {
+            adjacencyList[vertex] = new LinkedList<int>();
+        }
+
+        public int CountOfEdges(int vertex)
+        {
+            return adjacencyList[vertex].Count;
+        }
+
+        public int CountOfVertices()
+        {
+            int total = 0;
+
+            foreach (var item in adjacencyList)
+            {
+                if (item.Any())
+                {
+                    total++;
+                }
+            }
+
+            return total;
         }
    }
 
@@ -69,12 +118,24 @@ namespace KargerMinCutGraph
 
         private static int GetMinCutFromGraph(Graph graph)
         {
-            if (graph.Length() <= 2)
+            if (graph.CountOfVertices() <= 2)
             {
                 return 1;
             }
 
-            return 0;
+            Random random = new Random();
+            int randomVertex = 0;
+            do 
+            {
+                randomVertex = random.Next(graph.CountOfVertices());
+            }
+            while(graph.CountOfEdges(randomVertex) == 0);
+
+            int randomEdge = random.Next(0, graph.CountOfEdges(randomVertex));
+
+            graph.RemoveEdge(randomVertex, randomEdge);
+
+            return GetMinCutFromGraph(graph);
         }
     }
 }
