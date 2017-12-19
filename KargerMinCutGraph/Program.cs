@@ -3,139 +3,154 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace KargerMinCutGraph
+namespace KargerMinCut
 {
     internal enum ExitCode : int
     {
         Success = 0,
+
         InvalidFileName = 1,
+
         UnknownError = 10
     }
 
-    internal class Graph
+    public class Edge
     {
-        LinkedList<int>[] adjacencyList;
+        public int StartPoint { get; set; }
 
-        public Graph(int vertices)
+        public int EndPoint { get; set; }
+    }
+
+    public class Graph : ICloneable
+    {
+        public List<int> Vertices = new List<int>();
+
+        public List<Edge> Edges = new List<Edge>();
+
+        public object Clone()
         {
-            adjacencyList = new LinkedList<int>[vertices];
-
-            for (var i = 0; i <= adjacencyList.Length - 1; i++)
+            return new Graph
             {
-                adjacencyList[i] = new LinkedList<int>();
+                Edges = new List<Edge>(Edges),
+                Vertices = new List<int>(Vertices)
+            };
+        }
+    }
+
+    public class KargerMinCut
+    {
+        public int MinCut(Graph graph)
+        {
+            return RemoveVertex(graph.Clone()) / 2;
+        }
+
+        private int RemoveVertex(object clone)
+        {
+            Graph graph = (Graph)clone;
+
+            if (graph.Vertices.Count == 2)
+            {
+                return graph.Edges.Count;
             }
+
+            Edge removedEdge = RemoveRandomEdge(graph);
+
+            ClearEdges(graph, removedEdge);
+
+            return RemoveVertex(graph);
         }
 
-        public void AddEdge(int startVertex, int endVertex)
+        private void ClearEdges(Graph graph, Edge removedEdge)
         {
-            // Needed to - 1 to offset 1 based positioning vs array 0 based index
-            adjacencyList[startVertex - 1].AddLast((endVertex - 1));
-        }
+            graph.Vertices.Remove(removedEdge.EndPoint);
 
-        public void RemoveEdge(int startVertex, int endVertex)
-        {
-            MergeVertices(startVertex, endVertex);
-            RemoveVertex(endVertex);
-            RemoveReferenceToVertex(endVertex);
-        }
-
-        private void MergeVertices(int startVertex, int endVertex)
-        {
-            foreach (var item in adjacencyList[endVertex])
+            foreach (var edge in graph.Edges)
             {
-                if (!adjacencyList[startVertex].Contains(item))
+                if (edge.EndPoint == removedEdge.EndPoint)
                 {
-                    adjacencyList[startVertex].AddLast(item);
+                    edge.EndPoint = removedEdge.StartPoint;
                 }
-            }
-        }
 
-        private void RemoveReferenceToVertex(int endVertex)
-        {
-            foreach (var item in adjacencyList)
-            {
-                if (item.Contains(endVertex))
+                if (edge.StartPoint == removedEdge.EndPoint)
                 {
-                    item.Remove(endVertex);
-                }
-            }
-        }
-
-        public void RemoveVertex(int vertex)
-        {
-            adjacencyList[vertex] = new LinkedList<int>();
-        }
-
-        public int CountOfEdges(int vertex)
-        {
-            return adjacencyList[vertex].Count;
-        }
-
-        public int CountOfVertices()
-        {
-            int total = 0;
-
-            foreach (var item in adjacencyList)
-            {
-                if (item.Any())
-                {
-                    total++;
+                    edge.StartPoint = removedEdge.StartPoint;
                 }
             }
 
-            return total;
+            var edgesToRemove = graph.Edges.Where(edge => edge.StartPoint == edge.EndPoint).ToList();
+
+            foreach (var edge in edgesToRemove)
+            {
+                graph.Edges.Remove(edge);
+            }
         }
-   }
+
+        private Edge RemoveRandomEdge(Graph graph)
+        {
+            var rnd = new Random();
+
+            var edge = graph.Edges[rnd.Next(graph.Edges.Count)];
+            graph.Edges.Remove(edge);
+            return edge;
+        }
+    }
 
     class Program
     {
-        static int Main(string[] args)
+        static int Main()
         {
-            var fileName = args[0];
-            if (!File.Exists(fileName))
+            KargerMinCut kargerMinCut = new KargerMinCut();
+            int minCut = 1000;
+
+            for (int i = 0; i < 1000; i++)
             {
-                return (int)ExitCode.InvalidFileName;
+                Graph graph = CreateGraph("InputFile.txt");
+                int tempMinCut = kargerMinCut.MinCut(graph);
+                if (tempMinCut < minCut)
+                {
+                    minCut = tempMinCut;
+                }
             }
 
-            var lineCount = File.ReadLines(@fileName).Count();
-            Graph graph = new Graph(lineCount);
-            foreach (var line in File.ReadLines(@fileName))
-            {
-                var info = line.Split('\t').ToArray();
-                var vertex = info[0];
-
-                for(var i = 1; i <= info.Length - 2; i++)
-                {
-                    graph.AddEdge(Convert.ToInt32(vertex), Convert.ToInt32(info[i]));
-                }
-            } 
-
-            int minCut = GetMinCutFromGraph(graph);
             Console.WriteLine(minCut);
-
             return (int)ExitCode.Success;
         }
 
-        private static int GetMinCutFromGraph(Graph graph)
+        static Graph CreateGraph(string filePath)
         {
-            if (graph.CountOfVertices() <= 2)
+            Graph graph = new Graph();
+
+            using (TextReader reader = File.OpenText(@filePath))
             {
-                return 1;
+                string text = reader.ReadLine();
+                while (text != null)
+                {
+                    string[] splited = text.Split('\t');
+
+                    int vertex;
+                    if (int.TryParse(splited[0], out vertex))
+                    {
+                        graph.Vertices.Add(vertex);
+
+                        for (var i = 1; i < splited.Length; i++)
+                        {
+                            int endpoint;
+                            if (int.TryParse(splited[i], out endpoint))
+                            {
+                                graph.Edges.Add(new Edge
+                                {
+                                    StartPoint = vertex,
+                                    EndPoint = endpoint
+                                });
+                            }
+                        }
+                    }
+
+                    text = reader.ReadLine();
+                }
             }
 
-            Random random = new Random();
-            int randomVertex = 0;
-            do 
-            {
-                randomVertex = random.Next(graph.CountOfVertices());
-            }
-            while(graph.CountOfEdges(randomVertex) == 0);
-
-            int randomEdge = random.Next(0, graph.CountOfEdges(randomVertex));
-
-            graph.RemoveEdge(randomVertex, randomEdge);
-
-            return GetMinCutFromGraph(graph);
+            return graph;
         }
     }
 }
