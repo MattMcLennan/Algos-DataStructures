@@ -6,23 +6,28 @@ namespace Strongly_Connected_Components_SCC
 {
     internal class Graph 
     {
+        
         public Graph()
         {
-            Vertices = new List<int>();
-            Edges = new List<Edge>();
+            Data = new Dictionary<int, LinkedList<int>>();
         }
 
-         public List<int> Vertices { get; set; }
+        public void AddOrUpdateEdges(int startingVertex, int endingVertex)
+        {
+            LinkedList<int> value;
+            if (Data.TryGetValue(startingVertex, out value))
+            {
+                value.AddLast(endingVertex);
+                return;
+            }
 
-        public List<Edge> Edges { get; set; }
+            var endingVertices = new LinkedList<int>();
+            endingVertices.AddFirst(endingVertex);
+            Data.Add(startingVertex, endingVertices);
+        }
+
+        public Dictionary<int, LinkedList<int>> Data { get; set; }
    }
-
-    public class Edge
-    {
-        public int StartPoint { get; set; }
-
-        public int EndPoint { get; set; }
-    }
 
     class Program
     {
@@ -45,16 +50,10 @@ namespace Strongly_Connected_Components_SCC
                     int vertex;
                     if (int.TryParse(splited[0], out vertex))
                     {
-                        graph.Vertices.Add(vertex);
-
                         int endpoint;
                         if (int.TryParse(splited[1], out endpoint))
                         {
-                            graph.Edges.Add(new Edge
-                            {
-                                StartPoint = vertex,
-                                EndPoint = endpoint
-                            });
+                            graph.AddOrUpdateEdges(vertex, endpoint);
                         }
                     }
 
