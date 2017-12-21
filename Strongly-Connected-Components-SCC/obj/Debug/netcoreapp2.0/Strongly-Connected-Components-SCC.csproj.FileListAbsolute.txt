@@ -1,0 +1,10 @@
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/bin/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.deps.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/bin/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.runtimeconfig.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/bin/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.runtimeconfig.dev.json
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/bin/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/bin/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.pdb
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/obj/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.csproj.CoreCompileInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/obj/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.AssemblyInfoInputs.cache
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/obj/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.AssemblyInfo.cs
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/obj/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.dll
+/Users/matthewmclennan/Code/Algos-DataStructures/Strongly-Connected-Components-SCC/obj/Debug/netcoreapp2.0/Strongly-Connected-Components-SCC.pdb

@@ -54,9 +54,7 @@ namespace KargerMinCut
             }
 
             Edge removedEdge = RemoveRandomEdge(graph);
-
             ClearEdges(graph, removedEdge);
-
             return RemoveVertex(graph);
         }
 
